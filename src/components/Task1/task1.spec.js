@@ -1,11 +1,7 @@
-import { render, screen } from "@testing-library/react";
-import App from "../../App";
+import { task1sum } from "./task1";
 
-describe("execute task1 function", () => {
-  render(<App />);
-
-  it("should render app name", () => {
-    const linkElement = screen.getByText(/app/i);
-    expect(linkElement).toBeInTheDocument();
+describe("task1sum test", () => {
+  it("adds properly", () => {
+    expect(task1sum(1, 3)).toBe(4);
   });
 });
