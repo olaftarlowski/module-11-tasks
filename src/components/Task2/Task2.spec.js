@@ -3,40 +3,41 @@ import userEvent from "@testing-library/user-event";
 import Task2 from "./Task2";
 
 describe("task2 tests", () => {
-  const renderComp = () => render(<Task2 />);
+  const renderComp = (startVal) => render(<Task2 start={startVal} />);
 
-  it("should display 0 on start", () => {
+  it("should display 0 on start if no props provided", () => {
     renderComp();
-    const counterVal = screen.getByText(/0/i);
+    const counterVal = screen.getByTestId("counter-element");
 
-    expect(counterVal).toBeInTheDocument();
+    expect(counterVal).toHaveTextContent(0);
+  });
+
+  it("should display start prop value", () => {
+    const startValue = -111;
+    renderComp(startValue);
+    const counterVal = screen.getByTestId("counter-element");
+
+    expect(counterVal).toHaveTextContent(startValue);
   });
 
   it("should increment by 1", () => {
-    renderComp();
+    const startValue = 112;
+    renderComp(startValue);
     const counterVal = screen.getByTestId("counter-element");
     const buttonPlus = screen.getByRole("button", {
       name: /\+/i,
     });
 
     userEvent.click(buttonPlus);
-    expect(counterVal).toHaveTextContent(1);
+    expect(counterVal).toHaveTextContent(startValue + 1);
 
-    userEvent.click(buttonPlus);
-    expect(counterVal).toHaveTextContent(2);
+    // userEvent.click(buttonPlus);
+    // expect(counterVal).toHaveTextContent(2);
   });
-
-  it("should decrement by 1", () => {
-    renderComp();
-    const counterVal = screen.getByTestId("counter-element");
-    const buttonMinus = screen.getByRole("button", {
-      name: /-/i,
-    });
-
-    userEvent.click(buttonMinus);
-    expect(counterVal).toHaveTextContent(-1);
-
-    userEvent.click(buttonMinus);
-    expect(counterVal).toHaveTextContent(-2);
+  test("renders three buttons", async () => {
+    const startValue = 112;
+    renderComp(startValue);
+    const items = await screen.findAllByRole("button");
+    expect(items).toHaveLength(3);
   });
 });

@@ -1,8 +1,9 @@
 import React from "react";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-const Task2 = () => {
-  const [counter, setCounter] = useState(0);
+const Task2 = ({ start }) => {
+  const [counter, setCounter] = useState(start);
 
   const incrementHandler = () => {
     setCounter((prevState) => prevState + 1);
@@ -26,3 +27,11 @@ const Task2 = () => {
 };
 
 export default Task2;
+
+Task2.propTypes = {
+  start: PropTypes.number,
+};
+
+Task2.defaultProps = {
+  start: 0,
+};
