@@ -81,6 +81,7 @@ describe("UserList tests", () => {
   it(`should display ${responseData.length} results`, async () => {
     getData.mockResolvedValue(responseData);
     const counterVal = screen.findAllByTestId("user-element");
+
     renderComp();
 
     expect(await counterVal).toHaveLength(3);
